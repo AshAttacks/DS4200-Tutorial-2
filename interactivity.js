@@ -3,6 +3,36 @@ d3.csv("/ExampleData.csv", function(data) {
     globalData.push(data);
 });
 
+// New JS Below
+
+function modularAddD3VisToPage(elementID){
+    //PRE: Pass the string of the ID we want to append the new D3 Vis to
+    //POST: Updated the web page to include the D3 vis as a child of the element whose ID we pass
+
+
+}
+
+function staticAddD3VisToPage(){
+    //PRE: When a D3 Function you pass needs to be stapled to a specific ID to make it work, put that code here and update the HTML accordingly
+
+    //EXAMPLE:  This link (https://d3-graph-gallery.com/graph/choropleth_basic.html) requires you to add some scripts to the HTML and
+    //          already have an SVG element in your HTML with an id of "my_dataviz"
+
+}
+
+function processD3Vis(){
+    //PRE: Nothing needed to be passed to this function when called
+    //POST: Parses the code provided below and returns an SVG that includes information about the data to be visualized
+
+    //Example:  We pass the code from this link (https://observablehq.com/@d3/bar-chart/2) which returns the SVG node as opposed to 
+    //          building the vis and attaching it to a pre-existing SVG element
+
+    return;
+}
+
+// Old JS Below
+
+
 function sort(compareObject,display) {
     var table = document.getElementById("recordsTable"),
     tbody = table.getElementsByTagName("tbody")[0];
