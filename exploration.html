@@ -3,6 +3,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
+  <script src="https://d3js.org/d3.v4.js"></script>
 
   <title>DS4200 Web Dev Tutorial</title>
 
@@ -38,11 +39,27 @@
             - Create a container with an appropriate title
             - Ensure the title is appropiately sized
             - Add a class so we can style it appropriately
-            - Add some generic text that we can reference in our page 
+            - Add some generic text that we can reference in our page
             - Add an image to the page
         -->
+        <div class="new-container center-content">
+            <div class = "new-content-title center-content">
+                <h2 class = "fancy-title">IMG SVG from ALtair below!</h2>
+            </div>
+            <div class = "new-container new-content-body center-content">
+                <img src="chart.svg" width="500px">
+            </div>
+        </div>
+        <div class="new-container center-content">
+            <div class = "new-content-title center-content">
+                <h2 class = "fancy-title">D3 Exploration for Later</h2>
+            </div>
+            <div class = "new-container new-content-body center-content">
+                <div id = "my_dataviz">
 
-
+                </div>
+            </div>
+        </div>
 
     </div>
     <div id="footer" class="footer">
@@ -50,5 +67,55 @@
             Tutorial started on October 29, 2026!
         </div>
     </div>
+<script>
+// Fixed size instead of Observable's `width`
+const width = 500;
+const height = Math.min(500, width / 2);
+const outerRadius = height / 2 - 10;
+const innerRadius = outerRadius * 0.75;
+const tau = 2 * Math.PI;
+
+// Append the SVG directly into the #my_dataviz div
+const svg = d3.select("#my_dataviz")
+  .append("svg")
+    .attr("viewBox", [0, 0, width, height])
+    .attr("width", width)
+    .attr("height", height);
+
+const g = svg.append("g")
+    .attr("transform", `translate(${width / 2},${height / 2})`);
+
+const arc = d3.arc()
+    .innerRadius(innerRadius)
+    .outerRadius(outerRadius)
+    .startAngle(0);
+
+g.append("path")
+    .datum({endAngle: tau})
+    .style("fill", "#ddd")
+    .attr("d", arc);
+
+const foreground = g.append("path")
+    .datum({endAngle: 0.127 * tau})
+    .style("fill", "orange")
+    .attr("d", arc);
+
+// No `invalidation` needed: the interval runs as long as the page is open
+d3.interval(() => {
+  foreground.transition()
+      .duration(750)
+      .attrTween("d", arcTween(Math.random() * tau));
+}, 1500);
+
+function arcTween(newAngle) {
+  return function(d) {
+    const interpolate = d3.interpolate(d.endAngle, newAngle);
+    return function(t) {
+      d.endAngle = interpolate(t);
+      return arc(d);
+    };
+  };
+}
+</script>
 </body>
 </html>
